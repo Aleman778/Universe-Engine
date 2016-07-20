@@ -59,6 +59,10 @@ public class GlfwWindow extends Window {
      */
     @Override
     public void dispose() {
+        if (window == -1) {
+            throw new NullPointerException("Window could not disposed. Window does not exist.");
+        }
+        
         glfwDestroyWindow(window);
         window = -1;
     }
@@ -90,11 +94,11 @@ public class GlfwWindow extends Window {
     }
 
     /**
-     * Set the width of this window
+     * Set the width of this window.
      * @param width the new window width
      */
     public void setWidth(int width) {
-        glfwSetWindowSize(window, width, getHeight());
+        setSize(width, getHeight());
     }
 
     /**
@@ -107,17 +111,18 @@ public class GlfwWindow extends Window {
     }
 
     /**
-     * Set the height of this window
+     * Set the height of this window.
      * @param height the new window height
      */
     public void setHeight(int height) {
-        glfwSetWindowSize(window, getWidth(), height);
+        setSize(getWidth(), height);
     }
     
     /**
-     * Get the size of this window
+     * Get the size of this window.
      * @return the size of this window
      */
+    @Override
     public Point getSize() {
         IntBuffer width = BufferUtils.createIntBuffer(0);
         IntBuffer height = BufferUtils.createIntBuffer(0);
@@ -126,12 +131,12 @@ public class GlfwWindow extends Window {
     }
     
     /**
-     * Set the size of this window
+     * Set the size of this window.
      * @param width the new window width
      * @param height the new window height
      */
     public void setSize(int width, int height) {
-        
+        glfwSetWindowSize(window, width, height);
     }
 
     /**
