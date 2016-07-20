@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Aleman778. All rights reserved.
  * License terms are in the included LICENSE file.
  */
-package universe.rendering.opengl;
+package universe.opengl;
 
 import static org.lwjgl.glfw.GLFW.*;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
@@ -18,7 +18,7 @@ import universe.rendering.Window;
  * GLFW is written in C and has native support for Windows,
  * OS X and many Unix-like systems using the X Window System,
  * such as Linux and FreeBSD.
- * @author alema
+ * @author Aleman778
  * @since Universe Core 1.0
  */
 public class GlfwWindow implements Window {
