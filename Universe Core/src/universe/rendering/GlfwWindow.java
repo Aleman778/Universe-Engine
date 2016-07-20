@@ -5,9 +5,10 @@
 package universe.rendering;
 
 import static org.lwjgl.glfw.GLFW.*;
-import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import static org.lwjgl.system.MemoryUtil.*;
-import universe.rendering.Window;
+import java.awt.Point;
+import java.nio.IntBuffer;
+import universe.util.BufferUtils;
 
 /**
  * GLFW is a free, Open Source, multi-platform library for
@@ -21,55 +22,18 @@ import universe.rendering.Window;
  * @author Aleman778
  * @since Universe Core 1.0
  */
-public class GlfwWindow implements Window {
+public class GlfwWindow extends Window {
     /**
      * The glfw window handle 
      */
     private long window;
-    
-    /**
-     * The title of this window
-     */
-    private String title;
-    
-    /**
-     * The width of this window
-     */
-    private int width;
-    
-    /**
-     * The height of this window
-     */
-    private int height;
 
-    /**
-     * Constructor.
-     * @param title the title of the window 
-     */
     public GlfwWindow(String title) {
-        this(title, 640, 480);
-    }
-    
-    /**
-     * Constructor.
-     * @param title the title of the window
-     * @param width the width of the window
-     * @param height the height of the window
-     */
-    public GlfwWindow(String title, int width, int height) {
-        this.title = title;
-        this.width = width;
-        this.height = height;
-        this.window = glfwCreateWindow(width, height, title, NULL, NULL);
+        super(title);
         
-        glfwSetWindowSizeCallback(window, new GLFWWindowSizeCallback() {
-            @Override
-            public void invoke(long window, int width, int height) {
-                GlfwWindow.this.width = width;
-                GlfwWindow.this.height = height;
-            }
-        });
+        window = glfwCreateWindow(640, 480, title, NULL, NULL);
     }
+
     
     /**
      * Updating the window for continuous use in loops.
@@ -108,15 +72,6 @@ public class GlfwWindow implements Window {
     }
 
     /**
-     * Get the title of this window.
-     * @return the window title
-     */
-    @Override
-    public String getTitle() {
-        return title;
-    }
-
-    /**
      * Set the title of this window
      * @param title the new window title
      */
@@ -131,7 +86,7 @@ public class GlfwWindow implements Window {
      */
     @Override
     public int getWidth() {
-        return width;
+        return getSize().x;
     }
 
     /**
@@ -139,8 +94,7 @@ public class GlfwWindow implements Window {
      * @param width the new window width
      */
     public void setWidth(int width) {
-        this.width = width;
-        glfwSetWindowSize(window, this.width, this.height);
+        glfwSetWindowSize(window, width, getHeight());
     }
 
     /**
@@ -149,7 +103,7 @@ public class GlfwWindow implements Window {
      */
     @Override
     public int getHeight() {
-        return height;
+        return getSize().y;
     }
 
     /**
@@ -157,8 +111,27 @@ public class GlfwWindow implements Window {
      * @param height the new window height
      */
     public void setHeight(int height) {
-        this.height = height;
-        glfwSetWindowSize(window, this.width, this.height);
+        glfwSetWindowSize(window, getWidth(), height);
+    }
+    
+    /**
+     * Get the size of this window
+     * @return the size of this window
+     */
+    public Point getSize() {
+        IntBuffer width = BufferUtils.createIntBuffer(0);
+        IntBuffer height = BufferUtils.createIntBuffer(0);
+        glfwGetWindowSize(window, width, height);
+        return new Point(width.get(0), height.get(0));
+    }
+    
+    /**
+     * Set the size of this window
+     * @param width the new window width
+     * @param height the new window height
+     */
+    public void setSize(int width, int height) {
+        
     }
 
     /**
