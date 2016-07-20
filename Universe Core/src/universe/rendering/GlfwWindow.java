@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Aleman778. All rights reserved.
  * License terms are in the included LICENSE file.
  */
-package universe.opengl;
+package universe.rendering;
 
 import static org.lwjgl.glfw.GLFW.*;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
