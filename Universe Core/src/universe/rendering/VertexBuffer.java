@@ -4,12 +4,14 @@
  */
 package universe.rendering;
 
+import universe.util.Disposable;
+
 /**
  * Abstract Vertex Buffer is a basic class handling buffers
  * @author Aleman778
  * @since Universe Core 1.0
  */
-public abstract class VertexBuffer {
+public abstract class VertexBuffer implements Disposable {
     /**
      * Element count in buffer.
      */
@@ -48,6 +50,7 @@ public abstract class VertexBuffer {
      * Disposes the buffer.
      * Note: buffer cannot be used after disposing.
      */
+    @Override
     public abstract void dispose();
     
     /**
