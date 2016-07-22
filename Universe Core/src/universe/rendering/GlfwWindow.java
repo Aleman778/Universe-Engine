@@ -22,7 +22,7 @@ import universe.util.BufferUtils;
  * @author Aleman778
  * @since Universe Core 1.0
  */
-public class GlfwWindow extends Window {
+public final class GlfwWindow extends Window {
     /**
      * The glfw window handle 
      */
