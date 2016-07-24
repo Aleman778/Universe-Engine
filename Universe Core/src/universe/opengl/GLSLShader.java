@@ -11,8 +11,9 @@ import universe.rendering.Shader;
 import universe.rendering.ShaderException;
 
 /**
- *
+ * GLSL shader used for rendering objects.
  * @author Aleman778
+ * @since Universe Core 1.0
  */
 public final class GLSLShader extends Shader {
     /**
