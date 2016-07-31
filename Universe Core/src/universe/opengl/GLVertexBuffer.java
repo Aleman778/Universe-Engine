@@ -8,7 +8,6 @@ import static org.lwjgl.opengl.GL15.*;
 import universe.rendering.VertexBuffer;
 import universe.util.BufferUtils;
 
-
 /**
  * OpenGL implementation for Vertex Buffers
  * @author Aleman778
@@ -18,7 +17,7 @@ public final class GLVertexBuffer extends VertexBuffer {
     /**
      * The buffer object reference.
      */
-    private final int buffer;
+    private int buffer;
     
     /**
      * Constructor.
@@ -33,11 +32,14 @@ public final class GLVertexBuffer extends VertexBuffer {
      * @param data the flaot array data to use
      */
     @Override
-    public void setArray(float[] data) {
+    public void setData(float[] data) {
+        super.setData(data);
+        
         bind();
         glBufferData(GL_ARRAY_BUFFER, BufferUtils.createFloatBuffer(data), GL_STATIC_DRAW);
         unbind();
     }
+
     
     /**
      * Bind the vertex buffer object.
@@ -62,5 +64,6 @@ public final class GLVertexBuffer extends VertexBuffer {
     @Override
     public void dispose() {
         glDeleteBuffers(buffer);
+        buffer = -1;
     }
 }

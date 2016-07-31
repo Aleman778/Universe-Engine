@@ -4,39 +4,32 @@
  */
 package universe.rendering;
 
+import universe.util.Disposable;
+
 /**
- * Abstract Vertex Buffer is a basic class handling buffers.
+ * Abstract buffer.
  * @author Aleman778
  * @since Universe Core 1.0
  */
-public abstract class VertexBuffer extends Buffer {
+public abstract class Buffer implements Disposable {
     /**
-     * Constructor.
+     * Element count in buffer.
      */
-    public VertexBuffer() {
-        count = 0;
-        size = 0;
-    }
+    protected int count;
     
     /**
-     * Set array data to this buffer.
-     * @param data the flaot array data to use
+     * Buffer size in bytes.
      */
-    public void setData(float[] data) {
-        count = data.length;
-        size = data.length * Float.BYTES;
-    }
+    protected long size;
     
     /**
      * Bind the vertex buffer object.
      */
-    @Override
     public abstract void bind();
     
     /**
      * Unbind the vertex buffer object.
      */
-    @Override
     public abstract void unbind();
     
     /**
@@ -45,4 +38,20 @@ public abstract class VertexBuffer extends Buffer {
      */
     @Override
     public abstract void dispose();
+    
+    /**
+     * Get the number of elements in the buffer.
+     * @return 
+     */
+    public final int getCount() {
+        return count;
+    }
+    
+    /**
+     * Get the size of this buffer in bytes.
+     * @return 
+     */
+    public final long getSize() {
+        return size;
+    }
 }
