@@ -26,7 +26,7 @@ public final class GLSLShader extends Shader {
      * @param type the shader type
      * @return the opengl shader type
      */
-    private static int glGetShaderType(Shader.ShaderType type) {
+    private static int glGetShaderType(ShaderType type) {
         switch (type) {
             case VERTEX: return GL_VERTEX_SHADER;
             case FRAGMENT: return GL_FRAGMENT_SHADER;
@@ -38,7 +38,6 @@ public final class GLSLShader extends Shader {
 
     public GLSLShader(ShaderType type) {
         super(type);
-        
         shader = glCreateShader(glGetShaderType(type));
     }
 
