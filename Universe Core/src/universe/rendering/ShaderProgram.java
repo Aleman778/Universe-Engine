@@ -4,6 +4,11 @@
  */
 package universe.rendering;
 
+import universe.math.Mat4;
+import universe.math.Vec2;
+import universe.math.Vec3;
+import universe.util.Disposable;
+
 /**
  * Abstract shader program used for combining shaders in order to render objects.
  * Note: Shaders has to be <b>enabled</b> in order to use it for rendering.
@@ -11,7 +16,7 @@ package universe.rendering;
  * @author Aleman778
  * @since Universe Core 1.0
  */
-public abstract class ShaderProgram {
+public abstract class ShaderProgram implements Disposable {
     /**
      * Constructor.
      */
@@ -26,7 +31,7 @@ public abstract class ShaderProgram {
 
     /**
      * Preparing the shader for use.
-     * Note: shaders has to be attached before program is ready
+     * Note: shaders has to be attached before program is ready.
      */
     public abstract void ready();
     
@@ -44,7 +49,49 @@ public abstract class ShaderProgram {
     
     /**
      * Check if shader is enabled.
-     * @return true if the shader program is enabled
+     * @return true if the shader program is enabled.
      */
     public abstract boolean isEnabled();
+
+    /**
+     * Disposes the program.
+     * Note: program cannot be used after disposing.
+     */
+    @Override
+    public abstract void dispose();
+    
+    /**
+     * Set shader uniform variable value.
+     * @param name the variable name
+     * @param value the value of the uniform
+     */
+    public abstract void setUniform(String name, Integer value);
+    
+    /**
+     * Set shader uniform variable value.
+     * @param name the variable name
+     * @param value the value of the uniform
+     */
+    public abstract void setUniform(String name, Float value);
+
+    /**
+     * Set shader uniform variable value.
+     * @param name the variable name
+     * @param value the value of the uniform
+     */
+    public abstract void setUniform(String name, Vec2 value);
+    
+    /**
+     * Set shader uniform variable value.
+     * @param name the variable name
+     * @param value the value of the uniform
+     */
+    public abstract void setUniform(String name, Vec3 value);
+
+    /**
+     * Set shader uniform variable value.
+     * @param name the variable name
+     * @param value the value of the uniform
+     */
+    public abstract void setUniform(String name, Mat4 value);
 }
