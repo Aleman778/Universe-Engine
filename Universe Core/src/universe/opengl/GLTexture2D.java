@@ -74,17 +74,22 @@ public final class GLTexture2D extends Texture {
      */
     @Override
     public void unbind() {
-        if (isBound())
-            return;
-        
-        glBindTexture(GL_TEXTURE_2D, tex);
+        glBindTexture(GL_TEXTURE_2D, 0);
         glBoundTexture = 0;
     }
     
+    /**
+     * Check if this texture is bound.
+     * @return true if the texture is bound
+     */
     public boolean isBound() {
         return (glBoundTexture == tex);
     }
     
+    /**
+     * Set image data from provided image.
+     * @param image 
+     */
     public void setImage(ArrayBitmap image) {
         bind();
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, getWidth(), getHeight(), 0,GL_RGBA,
