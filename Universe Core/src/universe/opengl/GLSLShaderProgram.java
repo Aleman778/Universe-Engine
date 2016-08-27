@@ -4,11 +4,12 @@
  */
 package universe.opengl;
 
-import java.util.HashMap;
 import static org.lwjgl.opengl.GL20.*;
-import universe.math.Mat4;
-import universe.math.Vec2;
-import universe.math.Vec3;
+import java.util.HashMap;
+import universe.math.Matrix4;
+import universe.math.Vector4;
+import universe.math.Vector3;
+import universe.math.Vector2;
 import universe.rendering.Shader;
 import universe.rendering.ShaderException;
 import universe.rendering.ShaderProgram;
@@ -142,7 +143,7 @@ public final class GLSLShaderProgram extends ShaderProgram {
      * @param value the value of the uniform
      */
     @Override
-    public void setUniform(String name, Vec2 value) {
+    public void setUniform(String name, Vector2 value) {
         enable();
         glUniform2fv(getUniform(name), value.toFloatBuffer());
     }
@@ -153,9 +154,20 @@ public final class GLSLShaderProgram extends ShaderProgram {
      * @param value the value of the uniform
      */
     @Override
-    public void setUniform(String name, Vec3 value) {
+    public void setUniform(String name, Vector3 value) {
         enable();
         glUniform3fv(getUniform(name), value.toFloatBuffer());
+    }
+    
+    /**
+     * Set shader uniform variable value.
+     * @param name the variable name
+     * @param value the value of the uniform
+     */
+    @Override
+    public void setUniform(String name, Vector4 value) {
+        enable();
+        glUniform4fv(getUniform(name), value.toFloatBuffer());
     }
 
     /**
@@ -164,7 +176,7 @@ public final class GLSLShaderProgram extends ShaderProgram {
      * @param value the value of the uniform
      */
     @Override
-    public void setUniform(String name, Mat4 value) {
+    public void setUniform(String name, Matrix4 value) {
         enable();
         glUniformMatrix4fv(getUniform(name), false, value.toFloatBuffer());
     }

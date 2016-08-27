@@ -4,9 +4,10 @@
  */
 package universe.rendering;
 
-import universe.math.Mat4;
-import universe.math.Vec2;
-import universe.math.Vec3;
+import universe.math.Matrix4;
+import universe.math.Vector4;
+import universe.math.Vector3;
+import universe.math.Vector2;
 import universe.util.Disposable;
 
 /**
@@ -79,19 +80,26 @@ public abstract class ShaderProgram implements Disposable {
      * @param name the variable name
      * @param value the value of the uniform
      */
-    public abstract void setUniform(String name, Vec2 value);
+    public abstract void setUniform(String name, Vector2 value);
     
     /**
      * Set shader uniform variable value.
      * @param name the variable name
      * @param value the value of the uniform
      */
-    public abstract void setUniform(String name, Vec3 value);
+    public abstract void setUniform(String name, Vector3 value);
+    
+    /**
+     * Set shader uniform variable value.
+     * @param name the variable name
+     * @param value the value of the uniform
+     */
+    public abstract void setUniform(String name, Vector4 value);
 
     /**
      * Set shader uniform variable value.
      * @param name the variable name
      * @param value the value of the uniform
      */
-    public abstract void setUniform(String name, Mat4 value);
+    public abstract void setUniform(String name, Matrix4 value);
 }
