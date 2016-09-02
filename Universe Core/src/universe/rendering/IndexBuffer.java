@@ -30,9 +30,9 @@ public abstract class IndexBuffer extends Buffer {
             indices[i + 1] = offset + 1;
             indices[i + 2] = offset + 2;
             
-            indices[i + 3] = offset + 2;
-            indices[i + 4] = offset + 3;
-            indices[i + 5] = offset + 0;
+            indices[i + 3] = offset + 1;
+            indices[i + 4] = offset + 2;
+            indices[i + 5] = offset + 3;
             
             offset += 4;
         }
