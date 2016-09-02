@@ -5,7 +5,6 @@
 package universe.rendering;
 
 import universe.util.Disposable;
-import universe.util.FileUtils;
 
 /**
  * Abstract shader used to render objects.
@@ -22,6 +21,7 @@ import universe.util.FileUtils;
  * @since Universe Core 1.0
  */
 public abstract class Shader implements Disposable {
+    
     /**
      * Different types of shaders.
      */
@@ -35,17 +35,11 @@ public abstract class Shader implements Disposable {
     protected ShaderType type;
     
     /**
-     * Shader compiled flag.
-     */
-    protected boolean compiled;
-    
-    /**
      * Constructor.
      * @param type the type of shader
      */
     public Shader(ShaderType type) {
         this.type = type;
-        this.compiled = false;
     }
     
     /**
@@ -70,7 +64,5 @@ public abstract class Shader implements Disposable {
      * Get the compiled status.
      * @return true if the shader is compiled
      */
-    public boolean isCompiled() {
-        return compiled;
-    }
+    public abstract boolean isCompiled();
 }

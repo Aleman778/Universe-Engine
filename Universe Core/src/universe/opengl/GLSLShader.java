@@ -22,6 +22,11 @@ public final class GLSLShader extends Shader {
     private int shader;
     
     /**
+     * Shader compiled flag.
+     */
+    private boolean compiled;
+    
+    /**
      * Get opengl shader type.
      * @param type the shader type
      * @return the opengl shader type
@@ -36,11 +41,18 @@ public final class GLSLShader extends Shader {
         return -1;
     }
 
+    /**
+     * Constructor.
+     * @param type the shader type.
+     */
     public GLSLShader(ShaderType type) {
         super(type);
         shader = glCreateShader(glGetShaderType(type));
     }
 
+    /**
+     * Compiles the shader.
+     */
     @Override
     public void compile() {
         if (shader == -1) {
@@ -58,6 +70,10 @@ public final class GLSLShader extends Shader {
         }
     }
 
+    /**
+     * Disposes the shader.
+     * Note: shader cannot be used after disposing.
+     */
     @Override
     public void dispose() {
         if (shader == -1) {
@@ -69,11 +85,28 @@ public final class GLSLShader extends Shader {
         shader = -1;
     }
 
+    /**
+     * Set shader source code.
+     * @param source the source code
+     */
     @Override
     public void setSource(String source) {
         glShaderSource(shader, source);
     }
+
+    /**
+     * Get the compiled status.
+     * @return true if the shader is compiled
+     */
+    @Override
+    public boolean isCompiled() {
+        return compiled;
+    }
     
+    /**
+     * Get the opengl shader reference id.
+     * @return the reference id
+     */
     public int getRef() {
         return shader;
     }
