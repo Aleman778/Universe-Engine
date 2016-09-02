@@ -4,12 +4,14 @@
  */
 package universe.rendering;
 
+import universe.util.Disposable;
+
 /**
  * Abstract texture class uses a array bitmap as texture.
  * @author Aleman778
  * @since Universe Core 1.0
  */
-public abstract class Texture {
+public abstract class Texture implements Disposable {
     /**
      * Texture filtering options.
      */
@@ -56,6 +58,13 @@ public abstract class Texture {
      * Unbind this texture.
      */
     public abstract void unbind();
+    
+    /**
+     * Disposes the texture.
+     * Note: texture cannot be used after disposing.
+     */
+    @Override
+    public abstract void dispose();
     
     /**
      * Set the minification filtering option.

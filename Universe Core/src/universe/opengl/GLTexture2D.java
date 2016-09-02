@@ -41,6 +41,8 @@ public final class GLTexture2D extends Texture {
         super(image);
         tex = glGenTextures();
         setImage(image);
+        setMagFilter(Filter.LINEAR);
+        setMinFilter(Filter.LINEAR);
     }
     
     /**
@@ -62,6 +64,10 @@ public final class GLTexture2D extends Texture {
      */
     @Override
     public void bind() {
+        if (tex == -1) {
+            throw new NullPointerException("Failed to bind texture. Texture does not exist.");
+        }
+        
         if (isBound())
             return;
         
@@ -78,6 +84,16 @@ public final class GLTexture2D extends Texture {
         glBoundTexture = 0;
     }
     
+    @Override
+    public void dispose() {
+        if (tex == -1) {
+            throw new NullPointerException("Failed to dispose texture. Texture does not exist.");
+        }
+        
+        glDeleteTextures(tex);
+        tex = -1;
+    }
+    
     /**
      * Check if this texture is bound.
      * @return true if the texture is bound
@@ -91,6 +107,10 @@ public final class GLTexture2D extends Texture {
      * @param image 
      */
     public void setImage(ArrayBitmap image) {
+        if (tex == -1) {
+            throw new NullPointerException("Failed to set texture image. Texture does not exist.");
+        }
+        
         bind();
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, getWidth(), getHeight(), 0,GL_RGBA,
                 GL_UNSIGNED_BYTE, BufferUtils.createIntBuffer(image.getPixels()));
@@ -102,6 +122,10 @@ public final class GLTexture2D extends Texture {
      */
     @Override
     public void setMinFilter(Filter filter) {
+        if (tex == -1) {
+            throw new NullPointerException("Failed to set minification filter. Texture does not exist.");
+        }
+        
         bind();
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, glGetFilter(filter));
     }
@@ -112,6 +136,10 @@ public final class GLTexture2D extends Texture {
      */
     @Override
     public void setMagFilter(Filter filter) {
+        if (tex == -1) {
+            throw new NullPointerException("Failed to set magnification filter. Texture does not exist.");
+        }
+        
         bind();
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, glGetFilter(filter));
     }
