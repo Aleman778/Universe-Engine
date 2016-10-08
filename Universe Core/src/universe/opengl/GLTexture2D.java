@@ -5,6 +5,7 @@
 package universe.opengl;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.*;
 import universe.rendering.ArrayBitmap;
 import universe.rendering.Texture;
 import universe.util.BufferUtils;
@@ -31,6 +32,7 @@ public final class GLTexture2D extends Texture {
     public GLTexture2D() {
         super();
         tex = glGenTextures();
+        slot = glGetActiveTexture();
     }
 
     /**
@@ -40,6 +42,7 @@ public final class GLTexture2D extends Texture {
     public GLTexture2D(ArrayBitmap image) {
         super(image);
         tex = glGenTextures();
+        slot = glGetActiveTexture();
         setImage(image);
         setMagFilter(Filter.LINEAR);
         setMinFilter(Filter.LINEAR);
@@ -60,13 +63,20 @@ public final class GLTexture2D extends Texture {
     }
     
     /**
+     * Get the OpenGL active texture slot 
+     * @return the active texture slot number
+     */
+    private static int glGetActiveTexture() {
+        return glGetInteger(GL_ACTIVE_TEXTURE) - GL_TEXTURE0;
+    }
+    
+    /**
      * Bind this texture.
      */
     @Override
     public void bind() {
-        if (tex == -1) {
+        if (tex == -1)
             throw new NullPointerException("Failed to bind texture. Texture does not exist.");
-        }
         
         if (isBound())
             return;
@@ -86,9 +96,8 @@ public final class GLTexture2D extends Texture {
     
     @Override
     public void dispose() {
-        if (tex == -1) {
+        if (tex == -1)
             throw new NullPointerException("Failed to dispose texture. Texture does not exist.");
-        }
         
         glDeleteTextures(tex);
         tex = -1;
@@ -107,9 +116,8 @@ public final class GLTexture2D extends Texture {
      * @param image 
      */
     public void setImage(ArrayBitmap image) {
-        if (tex == -1) {
+        if (tex == -1)
             throw new NullPointerException("Failed to set texture image. Texture does not exist.");
-        }
         
         bind();
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, getWidth(), getHeight(), 0,GL_RGBA,
@@ -122,9 +130,8 @@ public final class GLTexture2D extends Texture {
      */
     @Override
     public void setMinFilter(Filter filter) {
-        if (tex == -1) {
+        if (tex == -1)
             throw new NullPointerException("Failed to set minification filter. Texture does not exist.");
-        }
         
         bind();
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, glGetFilter(filter));
@@ -136,11 +143,23 @@ public final class GLTexture2D extends Texture {
      */
     @Override
     public void setMagFilter(Filter filter) {
-        if (tex == -1) {
+        if (tex == -1)
             throw new NullPointerException("Failed to set magnification filter. Texture does not exist.");
-        }
         
         bind();
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, glGetFilter(filter));
+    }
+
+    @Override
+    public void setSlot(int slot) {
+        if (tex == -1)
+            throw new NullPointerException("Failed to set texture image. Texture does not exist.");
+        if (slot < 0 || slot > 31)
+            throw new IllegalStateException("Illegal texture slot " + slot + ". OpenGl supports a total of 32 texture slots.");
+        
+        super.setSlot(slot);
+        bind();
+        glActiveTexture(GL_TEXTURE0 + slot);
+        unbind();
     }
 }

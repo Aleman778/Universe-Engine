@@ -4,6 +4,7 @@
  */
 package universe.rendering;
 
+import static org.lwjgl.opengl.GL13.*;
 import universe.util.Disposable;
 
 /**
@@ -20,6 +21,8 @@ public abstract class Texture implements Disposable {
         LINEAR
     }
     
+    protected int slot;
+    
     /**
      * Bitmap image used as texture.
      */
@@ -30,6 +33,7 @@ public abstract class Texture implements Disposable {
      */
     public Texture() {
         this.image = null;
+        this.slot = 0;
     }
     
     /**
@@ -47,6 +51,14 @@ public abstract class Texture implements Disposable {
      */
     public static Texture load(String resource) {
         return null;//new Texture(ArrayBitmap.load(resource));
+    }
+    
+    public static void activate(int slot) {
+        if (slot < 0 || slot > 31) {
+            throw new IllegalStateException("OpenGL texture slot out of bounds. Please use slot between 0 and 31.");
+        } else {
+            glActiveTexture(GL_TEXTURE0 + slot);
+        }
     }
     
     /**
@@ -77,6 +89,22 @@ public abstract class Texture implements Disposable {
      * @param filter the magnification filter
      */
     public abstract void setMagFilter(Filter filter);
+    
+    /**
+     * Set this texture to an output slot.
+     * @param slot the enabled slot
+     */
+    public void setSlot(int slot) {
+        this.slot = slot;
+    }
+    
+    /**
+     * Get the active texture slot.
+     * @return the active slot
+     */
+    public final int getSlot() {
+        return slot;
+    }
     
     /**
      * Get the width of this texture.
