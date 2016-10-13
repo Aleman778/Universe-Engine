@@ -39,5 +39,6 @@ public abstract class Material {
 
     public void setProjection(Matrix4 projection) {
         this.projection = projection;
+        shader.setUniform("m_projection", projection);
     }
 }
