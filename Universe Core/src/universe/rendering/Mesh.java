@@ -4,12 +4,14 @@
  */
 package universe.rendering;
 
+import universe.util.Disposable;
+
 /**
  * Simple mesh class.
  * @author Aleman778
  * @since Universe Core 1.0
  */
-public class Mesh {
+public class Mesh implements Disposable {
     
     private VertexBuffer buffer;
     
@@ -18,14 +20,6 @@ public class Mesh {
     private VertexArray array;
     
     private Material material;
-
-    public Mesh() {
-        this(null, null, null, null);
-    }
-    
-    public Mesh(Material material) {
-        this(null, null, null, material);
-    }
 
     public Mesh(VertexArray array, Material material) {
         this(array.vbo, null, array, material);
@@ -65,6 +59,16 @@ public class Mesh {
     public void render() {
         bind();
         draw();
+    }
+
+    @Override
+    public void dispose() {
+        array.dispose();
+        buffer.dispose();
+        material.dispose();
+        
+        if (indices != null)
+            indices.dispose();
     }
 
     public VertexBuffer getBuffer() {

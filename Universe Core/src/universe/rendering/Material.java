@@ -5,13 +5,14 @@
 package universe.rendering;
 
 import universe.math.Matrix4;
+import universe.util.Disposable;
 
 /**
  * Simple material class, provides a shader, projection matrix and a main texture.
  * @author Aleman778
  * @since Universe Core 1.0
  */
-public abstract class Material {
+public abstract class Material implements Disposable {
     
     protected ShaderProgram shader;
     
@@ -28,6 +29,12 @@ public abstract class Material {
     public abstract void bind();
     
     public abstract void unbind();
+
+    @Override
+    public void dispose() {
+        shader.dispose();
+        mainTexture.dispose();
+    }
 
     public final Texture getMainTexture() {
         return mainTexture;
